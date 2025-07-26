@@ -141,22 +141,46 @@ curl http://localhost:5000/api/stats/xyh635
 
 ### Step 1: Shorten a URL
 ```powershell
-curl -X POST http://localhost:5000/api/shorten `
-  -H "Content-Type: application/json" `
-  -d '{"url":"https://www.nvidia.com/en-us/geforce/campaigns/back-to-school/?nvid=nv-int-drvr-637258"}'
+Invoke-WebRequest -Uri http://localhost:5000/api/shorten -Method POST -ContentType "application/json" -Body '{"url":"https://www.example.com"}'
+
+# Example:
+
+#Request
+Invoke-WebRequest -Uri http://localhost:5000/api/shorten -Method POST -ContentType "application/json" -Body '{"url":"https://www.nvidia.com/en-us/geforce/campaigns/back-to-school/?nvid=nv-int-drvr-637258"}'
+
+#Response:
+{"clicks":1,"created_at":"2025-07-26T22:01:11.850290","url":"https://www.nvidia.com/en-us/geforce/c                     ampaigns/back-to-school/?nvid=nv-int-drvr-637258"}
+
 ```
 
 ### Step 2: Follow redirect (browser or CLI)
 ```powershell
-curl -L http://localhost:5000/<short-code>
+Invoke-WebRequest -Uri http://localhost:5000/<short-code>
+
+#Example:
+
+#Request:
+Invoke-WebRequest -Uri http://localhost:5000/Wml1y3
+
+#Response:
+Webpage will be visible on your browser once you visit through the short url !
 ```
-**NOTE:** Replace `<short-code>` with the actual code from Step 1 (e.g., `xyh635`)
+**NOTE:** Replace `<short-code>` with the actual code from Step 1 (e.g., `xyh635`) and open the link in your browser.
 
 ### Step 3: Get click statistics
 ```powershell
-curl http://localhost:5000/api/stats/xyh635
+Invoke-WebRequest -Uri http://localhost:5000/api/stats/<short-code>
+
+#Example:
+
+#Request:
+Invoke-WebRequest -Uri http://localhost:5000/api/stats/Wml1y3
+
+#Response
+{"short_code":"Wml1y3","short_url":"http://localhost:5000/Wml1y3"}
 ```
 
+**NOTE:** Replace `<short-code>` with the actual code from Step 1 
 ---
 
 ## Key Differences
